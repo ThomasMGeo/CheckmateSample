@@ -6,6 +6,7 @@ This Python module provides a function to generate a checkerboard pattern using 
 ## Parameters
 
 board_size (tuple[int, int]): Size of the board in (rows, columns).
+
 square_size (tuple[int, int]): Size of each square in (rows, columns).
 
 ## Dependencies
