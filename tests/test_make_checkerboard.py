@@ -70,3 +70,26 @@ def test_checkerboard_dtype():
 def test_invalid_inputs(board_size, square_size):
     with pytest.raises((ValueError, ZeroDivisionError)):
         make_checkerboard(board_size, square_size)
+
+def test_make_checkerboard_validation_true():
+    board_size = (6, 6)
+    square_size = (2, 2)
+    result = make_checkerboard(board_size, square_size, validation=True)
+    
+    # Check if the result contains only 0, 1, and 2
+    assert np.all(np.isin(result, [0, 1, 2]))
+    
+    # Check if all three values (0, 1, 2) are present in the result
+    assert set(np.unique(result)) == {0, 1, 2}
+    
+    # Check the pattern (this assumes a 6x6 board with 2x2 squares)
+    expected_pattern = np.array([
+        [0, 0, 1, 1, 2, 2],
+        [0, 0, 1, 1, 2, 2],
+        [1, 1, 2, 2, 0, 0],
+        [1, 1, 2, 2, 0, 0],
+        [2, 2, 0, 0, 1, 1],
+        [2, 2, 0, 0, 1, 1]
+    ], dtype='float32')
+    
+    np.testing.assert_array_equal(result, expected_pattern)
