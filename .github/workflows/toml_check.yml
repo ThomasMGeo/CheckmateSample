@@ -1,0 +1,24 @@
+name: Check pyproject.toml
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  check-pyproject:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Display pyproject.toml contents
+      run: |
+        echo "pyproject.toml contents:"
+        cat pyproject.toml
+
+    - name: Check for hidden characters
+      run: |
+        echo "First few bytes of pyproject.toml:"
+        od -c pyproject.toml | head -n 2
