@@ -93,3 +93,18 @@ def test_make_checkerboard_validation_true():
     ], dtype='float32')
     
     np.testing.assert_array_equal(result, expected_pattern)
+
+def test_make_checkerboard_warning_non_square_board(capsys):
+    make_checkerboard((5, 6), (2, 2))
+    captured = capsys.readouterr()
+    assert "Warning: The inputs for board_size or square_size are not the same" in captured.out
+
+def test_make_checkerboard_warning_non_square_squares(capsys):
+    make_checkerboard((6, 6), (2, 3))
+    captured = capsys.readouterr()
+    assert "Warning: The inputs for board_size or square_size are not the same" in captured.out
+
+def test_make_checkerboard_warning_both_non_square(capsys):
+    make_checkerboard((5, 6), (2, 3))
+    captured = capsys.readouterr()
+    assert "Warning: The inputs for board_size or square_size are not the same" in captured.out
