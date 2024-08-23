@@ -1,7 +1,7 @@
 [
 project
 ]
-name = "checkmate-sample"
+name = "checkmate_sample"
 version = "0.1.0"
 description = "A sample project with checkerboard functionality"
 authors = [
