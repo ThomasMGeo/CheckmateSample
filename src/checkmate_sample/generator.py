@@ -17,6 +17,10 @@ def make_checkerboard(board_size: tuple[int, int], square_size: tuple[int, int])
     rows, cols = board_size
     sq_rows, sq_cols = square_size
 
+    # Check for invalid inputs
+    if rows <= 0 or cols <= 0 or sq_rows <= 0 or sq_cols <= 0:
+        raise ValueError("All input dimensions must be positive integers.")
+
     # Calculate the checkerboard pattern efficiently
     row_indices = np.arange(rows) // sq_rows
     col_indices = np.arange(cols) // sq_cols
