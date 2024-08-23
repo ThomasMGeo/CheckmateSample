@@ -2,6 +2,13 @@ import pytest
 import numpy as np
 from checkmate_sample.generator import make_checkerboard
 
+def test_checkerboard_values_zero_one():
+    board_size = (10, 10)
+    square_size = (2, 2)
+    checkerboard = make_checkerboard(board_size, square_size)
+    assert np.all(np.logical_or(checkerboard == 0, checkerboard == 1)), "Checkerboard should only contain 0 and 1"
+
+
 def test_checkerboard_shape():
     board_size = (8, 8)
     square_size = (1, 1)
