@@ -1,6 +1,4 @@
-[
-project
-]
+[project]
 name = "checkmate_sample"
 version = "0.1.0"
 description = "A sample project with checkerboard functionality"
@@ -15,8 +13,6 @@ dependencies = [
 requires-python = ">=3.9"
 readme = "README.md"
 
-[
-build-system
-]
+[build-system]
 requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
