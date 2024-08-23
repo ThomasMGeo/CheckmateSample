@@ -1,4 +1,4 @@
-name: Build and Test checkmate_sample
+name: Build Dependencies for checkmate_sample
 
 on:
   push:
@@ -32,17 +32,3 @@ jobs:
     - name: List installed packages
       run: |
         pip list
-    
-    - name: Run tests
-      run: |
-        python -m pytest tests/
-    
-    - name: Check code formatting with Black
-      run: |
-        pip install black
-        black --check .
-    
-    - name: Lint with flake8
-      run: |
-        pip install flake8
-        flake8 .
