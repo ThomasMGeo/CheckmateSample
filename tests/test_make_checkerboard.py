@@ -1,6 +1,6 @@
 import pytest
 import numpy as np
-from generator import make_checkerboard
+from checkmate_sample.generator import make_checkerboard
 
 def test_checkerboard_shape():
     board_size = (8, 8)
