@@ -62,10 +62,6 @@ jobs:
         echo "Setuptools_scm contents:"
         python -c "import setuptools_scm; print(dir(setuptools_scm))"
 
-    - name: Check setuptools_scm version
-       run: |
-         pip show setuptools_scm
-
     - name: Check setuptools_scm configuration
       run: |
         echo "setuptools_scm configuration:"
