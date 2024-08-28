@@ -1,4 +1,4 @@
-name: Build Dependencies for checkmate_sample
+name: Build Dependencies for CheckmateSample
 
 on:
   push:
