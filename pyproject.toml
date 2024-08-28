@@ -1,6 +1,6 @@
 [project]
 name = "CheckmateSample"
-version = "0.2.1"
+version = "0.2.2"
 description = "A sample project with checkerboard functionality"
 authors = [
     {name = "Thomas Martin", email = "tmartin@ucar.edu"},
