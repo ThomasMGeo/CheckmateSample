@@ -1,8 +1,13 @@
 # __init__.py for CheckmateSample
-from importlib.metadata import version, PackageNotFoundError
-from .generator import * 
+from .generator import *
 
 try:
-    from ._version import __version__
+    from ._version import version as __version__
 except ImportError:
-    __version__ = "unknown"
+    try:
+        from importlib.metadata import version, PackageNotFoundError
+        __version__ = version("CheckmateSample")
+    except PackageNotFoundError:
+        __version__ = "unknown"
+
+__all__ = ["__version__"]
