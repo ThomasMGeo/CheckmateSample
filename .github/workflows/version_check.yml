@@ -68,10 +68,19 @@ jobs:
         echo "Python path:"
         python -c "import sys; print('\n'.join(sys.path))"
 
+    - name: Check package structure
+      run: |
+        echo "Package structure:"
+        find . -type f
+        echo "Python path:"
+        python -c "import sys; print('\n'.join(sys.path))"
+
     - name: Check __init__.py content
       run: |
-        echo "Contents of __init__.py:"
-        cat src/CheckmateSample/__init__.py
+        echo "Searching for __init__.py files:"
+        find . -name "__init__.py"
+        echo "Contents of __init__.py (if found):"
+        find . -name "__init__.py" -exec cat {} \; || echo "No __init__.py found"
 
     - name: Check _version.py
       run: |
