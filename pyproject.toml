@@ -1,6 +1,6 @@
 [project]
 name = "CheckmateSample"
-version = "0.2.3"
+
 description = "A sample project with checkerboard functionality"
 authors = [
     {name = "Thomas Martin", email = "tmartin@ucar.edu"},
@@ -12,6 +12,7 @@ dependencies = [
 
 requires-python = ">=3.9"
 readme = "README.md"
+dynamic = ["version"]
 
 [project.optional-dependencies]
 dev = [
@@ -20,11 +21,12 @@ dev = [
 ]
 
 [build-system]
-requires = ["setuptools>=61.0"]
+requires = ["setuptools>=61.0", "setuptools_scm[toml]>=6.2"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools_scm]
 write_to = "src/CheckmateSample/_version.py"
+version_scheme = "post-release"
 
 [tool.pytest]
 addopts = "--import-mode=importlib"
