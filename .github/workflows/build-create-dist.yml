@@ -6,7 +6,6 @@ on:
       - 'v*'  # Push events to matching v*, i.e. v1.0, v20.15.10
   pull_request:
     branches: [ main ]
-
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
@@ -18,16 +17,28 @@ jobs:
         python-version: '3.9'  # Minimum version specified in your pyproject.toml
     - name: Install dependencies
       run: |
+        echo "Python version:"
+        python --version
+        echo "Upgrading pip..."
         python -m pip install --upgrade pip
+        echo "Installing build dependencies..."
         pip install build pytest twine
+        echo "Installing package..."
         pip install .
+        echo "Installed packages:"
+        pip list
     - name: Run tests
-      run: pytest
+      run: |
+        echo "Running tests..."
+        pytest
+        echo "Tests completed."
     - name: Build package
       if: success()
       run: |
+        echo "Building package..."
         python -m build
         echo "Package built successfully"
+        echo "Contents of dist directory:"
         ls -l dist/
     - name: Upload dist
       if: success()
@@ -35,7 +46,6 @@ jobs:
       with:
         name: dist
         path: dist/
-
   publish:
     needs: build-and-test
     runs-on: ubuntu-latest
@@ -47,18 +57,26 @@ jobs:
       with:
         python-version: '3.9'
     - name: Install Twine
-      run: pip install twine
+      run: |
+        echo "Installing Twine..."
+        pip install twine
+        echo "Twine version:"
+        twine --version
     - uses: actions/download-artifact@v3
       with:
         name: dist
         path: dist/
     - name: List contents of dist directory
-      run: ls -l dist/
+      run: |
+        echo "Contents of dist directory:"
+        ls -l dist/
     - name: Publish distribution to PyPI
       env:
         TWINE_USERNAME: __token__
         TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
       run: |
-        echo "Attempting to upload to PyPI..."
+        echo "Checking distribution files..."
         twine check dist/*
+        echo "Attempting to upload to PyPI..."
+        twine upload --verbose dist/*
         twine upload --verbose dist/*
