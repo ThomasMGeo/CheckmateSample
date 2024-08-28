@@ -1,4 +1,4 @@
-# checkmate-sample
+# CheckmateSample
 
 This Python module provides a function to generate a checkerboard pattern using NumPy. The function make_checkerboard creates a 2D NumPy array representing a checkerboard with customizable board size and square size. Can be used for geospatial ML problems to try and combat autocorrelation. 
 
