@@ -1,7 +1,8 @@
 # __init__.py for CheckmateSample
 from .generator import *
 
-from ._version import __version__
-from ._version import version as __version__
+from ._version import get_version  # noqa: E402
+from .xarray import *  # noqa: F401, F403, E402
 
-__all__ = ["__version__"]
+__version__ = get_version()
+del get_version
