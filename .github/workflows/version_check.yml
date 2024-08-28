@@ -1,0 +1,49 @@
+name: Version Check
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  check-version:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0  # This is important for git history
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install setuptools_scm
+
+    - name: Check git tags
+      run: |
+        echo "Git tags:"
+        git describe --tags
+
+    - name: Check setuptools_scm version
+      run: |
+        echo "setuptools_scm detected version:"
+        python -m setuptools_scm
+
+    - name: Install package
+      run: |
+        pip install -e . --no-deps
+
+    - name: Check _version.py
+      run: |
+        echo "Contents of _version.py:"
+        cat src/CheckmateSample/_version.py
+
+    - name: Check imported version
+      run: |
+        echo "Imported version:"
+        python -c "import CheckmateSample; print(CheckmateSample.__version__)"
