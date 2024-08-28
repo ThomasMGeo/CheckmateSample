@@ -3,6 +3,6 @@ from importlib.metadata import version, PackageNotFoundError
 from .generator import * 
 
 try:
-    __version__ = version(__name__)
-except PackageNotFoundError:
+    from ._version import version as __version__
+except ImportError:
     __version__ = "unknown"
