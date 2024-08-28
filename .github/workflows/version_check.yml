@@ -27,23 +27,63 @@ jobs:
     - name: Check git tags
       run: |
         echo "Git tags:"
-        git describe --tags
+        git tag -l
+        echo "Latest tag:"
+        git describe --tags --abbrev=0
 
     - name: Check setuptools_scm version
       run: |
         echo "setuptools_scm detected version:"
         python -m setuptools_scm
 
+    - name: Check pyproject.toml
+      run: |
+        echo "Contents of pyproject.toml:"
+        cat pyproject.toml
+
     - name: Install package
       run: |
         pip install -e . --no-deps
+        echo "Installed packages:"
+        pip list
+
+    - name: Check package structure
+      run: |
+        echo "Package structure:"
+        find src/CheckmateSample -type f
+        echo "Python path:"
+        python -c "import sys; print('\n'.join(sys.path))"
+
+    - name: Check __init__.py content
+      run: |
+        echo "Contents of __init__.py:"
+        cat src/CheckmateSample/__init__.py
 
     - name: Check _version.py
       run: |
         echo "Contents of _version.py:"
-        cat src/CheckmateSample/_version.py
+        if [ -f src/CheckmateSample/_version.py ]; then
+          cat src/CheckmateSample/_version.py
+        else
+          echo "_version.py does not exist"
+        fi
+
+    - name: Debug import
+      run: |
+        echo "Debugging import:"
+        python -c "import CheckmateSample; print('Dir(CheckmateSample):', dir(CheckmateSample))"
+        python -c "import CheckmateSample; print('CheckmateSample.__file__:', CheckmateSample.__file__)"
 
     - name: Check imported version
       run: |
         echo "Imported version:"
-        python -c "import CheckmateSample; print(CheckmateSample.__version__)"
+        python -c "import CheckmateSample; print('Version:', getattr(CheckmateSample, '__version__', 'No __version__ attribute found'))"
+
+    - name: Check setuptools_scm configuration
+      run: |
+        echo "setuptools_scm configuration:"
+        python -c "from setuptools_scm import get_config; print(get_config())"
+
+    - name: Environment variables
+      run: |
+        echo "En
