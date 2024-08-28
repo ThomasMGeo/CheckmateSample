@@ -50,12 +50,20 @@ jobs:
         echo "Latest tag:"
         git describe --tags --abbrev=0 || echo "No tags found"
 
+    - name: Check package structure
+      run: |
+        echo "Package structure:"
+        find . -type f
+
     - name: Debug setuptools_scm
       run: |
         echo "Setuptools_scm version:"
         pip show setuptools_scm
         echo "Setuptools_scm contents:"
         python -c "import setuptools_scm; print(dir(setuptools_scm))"
+
+    - name: Check setuptools_scm version
+      run: pip show setuptools_scm
 
     - name: Check setuptools_scm configuration
       run: |
