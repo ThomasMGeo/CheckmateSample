@@ -1,5 +1,5 @@
 [project]
-name = "checkmate_sample"
+name = "CheckmateSample"
 version = "0.1.1"
 description = "A sample project with checkerboard functionality"
 authors = [
@@ -22,4 +22,4 @@ addopts = "--import-mode=importlib"
 pythonpath = "src"
 
 [project.urls]
-Homepage = "https://github.com/ThomasMGeo/checkmate-sample"
+Homepage = "https://github.com/ThomasMGeo/CheckmateSample"
