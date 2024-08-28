@@ -63,7 +63,8 @@ jobs:
         python -c "import setuptools_scm; print(dir(setuptools_scm))"
 
     - name: Check setuptools_scm version
-      run: pip show setuptools_scm
+       run: |
+         pip show setuptools_scm
 
     - name: Check setuptools_scm configuration
       run: |
