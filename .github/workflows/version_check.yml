@@ -118,26 +118,6 @@ jobs:
         echo "Contents of __init__.py (if found):"
         find . -name "__init__.py" -exec cat {} \; || echo "No __init__.py found"
 
-    - name: Check _version.py
-      run: |
-        echo "Contents of _version.py:"
-        if [ -f src/CheckmateSample/_version.py ]; then
-          cat src/CheckmateSample/_version.py
-        else
-          echo "_version.py does not exist"
-        fi
-
-    - name: Debug import
-      run: |
-        echo "Debugging import:"
-        python -c "import CheckmateSample; print('Dir(CheckmateSample):', dir(CheckmateSample))"
-        python -c "import CheckmateSample; print('CheckmateSample.__file__:', CheckmateSample.__file__)"
-
-    - name: Check imported version
-      run: |
-        echo "Imported version:"
-        python -c "import CheckmateSample; print('Version:', getattr(CheckmateSample, '__version__', 'No __version__ attribute found'))"
-
     - name: Check setuptools_scm configuration
       run: |
         echo "setuptools_scm configuration:"
