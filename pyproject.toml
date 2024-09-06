@@ -36,14 +36,14 @@ pythonpath = "src"
 [project.urls]
 Homepage = "https://github.com/ThomasMGeo/CheckmateSample"
 
-[tool.ruff]
+[tool.ruff.lint]
 # Enable pycodestyle ('E') and Pyflakes ('F') codes by default.
-select = ["E", "F"]
-ignore = []
+lint.select = ["E", "F"]
+lint.ignore = []
 
 # Allow autofix for all enabled rules (when `--fix`) is provided.
-fixable = ["A", "B", "C", "D", "E", "F"]
-unfixable = []
+lint.fixable = ["A", "B", "C", "D", "E", "F"]
+lint.unfixable = []
 
 # Exclude a variety of commonly ignored directories.
 exclude = [
@@ -74,10 +74,10 @@ exclude = [
 line-length = 88
 
 # Allow unused variables when underscore-prefixed.
-dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+lint.dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 
 target-version = "py311"
 
-[tool.ruff.mccabe]
+[tool.ruff.lint.mccabe]
 # Unlike Flake8, default to a complexity level of 10.
 max-complexity = 61
