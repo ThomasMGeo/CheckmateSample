@@ -117,8 +117,3 @@ jobs:
         find . -name "__init__.py"
         echo "Contents of __init__.py (if found):"
         find . -name "__init__.py" -exec cat {} \; || echo "No __init__.py found"
-
-    - name: Check setuptools_scm configuration
-      run: |
-        echo "setuptools_scm configuration:"
-        python -c "from setuptools_scm import get_config; print(get_config())"
