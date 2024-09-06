@@ -17,7 +17,12 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install .[dev]
-    - name: Run Ruff
-      run: ruff check --output-format=github --exclude="*.ipynb" .
-    - name: Run Ruff Format
-      run: ruff format --check --exclude="*.ipynb" .
+    - name: Run Ruff with auto-fix
+      run: |
+        ruff check --fix --output-format=github --exclude="*.ipynb" .
+        ruff format --exclude="*.ipynb" .
+    - name: Commit changes
+      uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: "Apply automatic formatting changes"
+        branch: ${{ github.head_ref }}
