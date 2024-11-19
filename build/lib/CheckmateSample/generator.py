@@ -63,13 +63,12 @@ def make_checkerboard(
 
     return checkerboard.astype("float32")
 
-
 def make_checkerboard_xr(
-    da: xr.DataArray,
-    square_size: tuple[int, int],
-    keep_pattern: int = 1,
+    da: xr.DataArray, 
+    square_size: tuple[int, int], 
+    keep_pattern: int = 1, 
     validation: bool = False,
-    dim_names: dict = None,
+    dim_names: dict = None
 ) -> xr.DataArray:
     """
     Apply a checkerboard pattern to an existing xarray DataArray.
@@ -79,7 +78,7 @@ def make_checkerboard_xr(
         square_size (tuple[int, int]): Size of each square in pixels (y, x).
         keep_pattern (int): Which part of the pattern to keep. 0, 1 for binary pattern; 0, 1, 2 for ternary pattern.
         validation (bool): If True, use a ternary (0, 1, 2) pattern; if False, use a binary (0, 1) pattern.
-        dim_names (dict): Dictionary specifying the names of x and y dimensions.
+        dim_names (dict): Dictionary specifying the names of x and y dimensions. 
                           Format: {'x': 'x_dim_name', 'y': 'y_dim_name'}
                           If None, will attempt to automatically detect dimensions.
 
@@ -92,51 +91,41 @@ def make_checkerboard_xr(
     if sq_y <= 0 or sq_x <= 0:
         raise ValueError("Square size dimensions must be positive integers.")
     if validation and keep_pattern not in [0, 1, 2]:
-        raise ValueError(
-            "For validation (ternary pattern), keep_pattern must be 0, 1, or 2."
-        )
+        raise ValueError("For validation (ternary pattern), keep_pattern must be 0, 1, or 2.")
     elif not validation and keep_pattern not in [0, 1]:
-        raise ValueError(
-            "For non-validation (binary pattern), keep_pattern must be 0 or 1."
-        )
+        raise ValueError("For non-validation (binary pattern), keep_pattern must be 0 or 1.")
 
     # Determine x and y dimensions
     if dim_names is None:
         # Try to automatically detect dimensions
-        possible_y_dims = ["y", "lat", "latitude"]
-        possible_x_dims = ["x", "lon", "longitude"]
-
+        possible_y_dims = ['y', 'lat', 'latitude']
+        possible_x_dims = ['x', 'lon', 'longitude']
+        
         y_dim = next((dim for dim in da.dims if dim in possible_y_dims), None)
         x_dim = next((dim for dim in da.dims if dim in possible_x_dims), None)
-
+        
         if y_dim is None or x_dim is None:
-            raise ValueError(
-                "Could not automatically detect x and y dimensions. Please specify using dim_names."
-            )
+            raise ValueError("Could not automatically detect x and y dimensions. Please specify using dim_names.")
     else:
-        y_dim = dim_names.get("y")
-        x_dim = dim_names.get("x")
-
+        y_dim = dim_names.get('y')
+        x_dim = dim_names.get('x')
+        
         if y_dim is None or x_dim is None:
             raise ValueError("Both 'x' and 'y' must be specified in dim_names.")
-
+        
         if y_dim not in da.dims or x_dim not in da.dims:
-            raise ValueError(
-                f"Specified dimensions {y_dim} and {x_dim} not found in DataArray."
-            )
+            raise ValueError(f"Specified dimensions {y_dim} and {x_dim} not found in DataArray.")
 
     y_size, x_size = da.sizes[y_dim], da.sizes[x_dim]
 
     # Add warning if inputs are not the same
     if y_size != x_size or sq_y != sq_x:
-        print(
-            "Warning: The inputs for board_size or square_size are not the same. This may result in a non-square checkerboard."
-        )
+        print("Warning: The inputs for board_size or square_size are not the same. This may result in a non-square checkerboard.")
 
     # Calculate the checkerboard pattern efficiently
     y_indices = (np.arange(y_size) // sq_y)[:, np.newaxis]
     x_indices = np.arange(x_size) // sq_x
-
+    
     if validation:
         checkerboard = (y_indices + x_indices) % 3
     else:
@@ -146,7 +135,7 @@ def make_checkerboard_xr(
     checkerboard_da = xr.DataArray(
         data=checkerboard,
         dims=[y_dim, x_dim],
-        coords={dim: da.coords[dim] for dim in [y_dim, x_dim]},
+        coords={dim: da.coords[dim] for dim in [y_dim, x_dim]}
     )
 
     # Broadcast the checkerboard pattern to match the input DataArray's shape
@@ -157,10 +146,10 @@ def make_checkerboard_xr(
 
     # Add metadata
     result.attrs.update(da.attrs)
-    result.attrs["checkerboard_applied"] = "True"
-    result.attrs["checkerboard_square_size"] = str(square_size)
-    result.attrs["checkerboard_keep_pattern"] = str(keep_pattern)
-    result.attrs["checkerboard_validation"] = str(validation)
-    result.attrs["checkerboard_dims"] = f"y: {y_dim}, x: {x_dim}"
+    result.attrs['checkerboard_applied'] = 'True'
+    result.attrs['checkerboard_square_size'] = str(square_size)
+    result.attrs['checkerboard_keep_pattern'] = str(keep_pattern)
+    result.attrs['checkerboard_validation'] = str(validation)
+    result.attrs['checkerboard_dims'] = f"y: {y_dim}, x: {x_dim}"
 
     return result
