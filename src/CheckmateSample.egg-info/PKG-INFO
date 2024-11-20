@@ -1,3 +1,20 @@
+Metadata-Version: 2.1
+Name: CheckmateSample
+Version: 0.2.13.post3+g4352ffc.d20241120
+Summary: A sample project with checkerboard functionality
+Author-email: Thomas Martin <tmartin@ucar.edu>
+Project-URL: Homepage, https://github.com/ThomasMGeo/CheckmateSample
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: numpy>=1.26.0
+Requires-Dist: xarray>=2023.8.0
+Requires-Dist: setuptools_scm>=8.1
+Provides-Extra: dev
+Requires-Dist: pytest>=7.4.0; extra == "dev"
+Requires-Dist: ruff>=0.1.3; extra == "dev"
+Requires-Dist: setuptools_scm>=8.1; extra == "dev"
+
 # CheckmateSample
 
 This Python module provides a function to generate a checkerboard pattern using NumPy. The function make_checkerboard creates a 2D NumPy array representing a checkerboard with customizable board size and square (and rectangle) sizes. Can be used for geospatial ML problems to try and combat autocorrelation. The functions can export two (testing/training) and three (testing/training/validation) checkerboard patterns
@@ -8,8 +25,6 @@ This Python module provides a function to generate a checkerboard pattern using 
 board_size (tuple[int, int]): Size of the board in (rows, columns).
 
 square_size (tuple[int, int]): Size of each square in (rows, columns).
-
-separation_size (int): Size of separation distance in pixels between squares.
 
 validation (bool): If True, use a ternary (0, 1, 2) pattern; if False, use a binary (0, 1) pattern
 
