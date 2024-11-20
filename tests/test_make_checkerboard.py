@@ -11,7 +11,7 @@ def test_checkerboard_values_zero_one():
 def test_masked_checkerboard_values_minusone_zero_one():
     board_size = (10, 10)
     square_size = (2, 2)
-    separation_size = 1,
+    separation_size = 1
     checkerboard = make_checkerboard(board_size, square_size, separation_size)
     assert np.all(np.logical_or(checkerboard == -1, checkerboard == 0, checkerboard == 1)), "Checkerboard should only contain 0 and 1"
 
@@ -63,7 +63,7 @@ def test_checkerboard_larger_squares():
 def test_masked_checkerboard_larger_squares():
     board_size = (6, 6)
     square_size = (2, 2)
-    setparation_size = 1,
+    setparation_size = 1
     checkerboard = make_checkerboard(board_size, square_size, setparation_size)
     expected = np.array([
         [ 0, -1,  1, -1,  0, -1],
@@ -92,7 +92,7 @@ def test_checkerboard_rectangular():
 def test_masked_checkerboard_rectangular():
     board_size = (6, 4)
     square_size = (2, 1)
-    setparation_size = 1,
+    setparation_size = 1
     checkerboard = make_checkerboard(board_size, square_size, setparation_size)
     expected = np.array([
         [ 0, -1,  1, -1],
