@@ -38,8 +38,8 @@ Homepage = "https://github.com/ThomasMGeo/CheckmateSample"
 
 [tool.ruff.lint]
 # Enable pycodestyle ('E') and Pyflakes ('F') codes by default.
-lint.select = ["E", "F"]
-lint.ignore = []
+select = ["E", "F"]
+ignore = []
 
 # Allow autofix for all enabled rules (when `--fix`) is provided.
 lint.fixable = ["A", "B", "C", "D", "E", "F"]
