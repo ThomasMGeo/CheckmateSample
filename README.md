@@ -9,6 +9,8 @@ board_size (tuple[int, int]): Size of the board in (rows, columns).
 
 square_size (tuple[int, int]): Size of each square in (rows, columns).
 
+separation_size (int): Size of separation distance in pixels between squares.
+
 validation (bool): If True, use a ternary (0, 1, 2) pattern; if False, use a binary (0, 1) pattern
 
 xarray only:
