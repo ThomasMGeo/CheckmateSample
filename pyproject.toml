@@ -36,7 +36,7 @@ pythonpath = "src"
 [project.urls]
 Homepage = "https://github.com/ThomasMGeo/CheckmateSample"
 
-[tool.ruff.lint]
+[tool.ruff]
 # Enable pycodestyle ('E') and Pyflakes ('F') codes by default.
 select = ["E", "F"]
 ignore = []
