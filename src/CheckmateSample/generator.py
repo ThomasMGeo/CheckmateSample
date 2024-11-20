@@ -67,6 +67,7 @@ def make_checkerboard(
 def make_checkerboard_xr(
     da: xr.DataArray,
     square_size: tuple[int, int],
+    separation_size: int = None,
     keep_pattern: int = 1,
     validation: bool = False,
     dim_names: dict = None,
@@ -77,6 +78,7 @@ def make_checkerboard_xr(
     Parameters:
         da (xr.DataArray): Input DataArray to apply the checkerboard pattern to.
         square_size (tuple[int, int]): Size of each square in pixels (y, x).
+        separation_size (int): Size of separation between squares in pixels.
         keep_pattern (int): Which part of the pattern to keep. 0, 1 for binary pattern; 0, 1, 2 for ternary pattern.
         validation (bool): If True, use a ternary (0, 1, 2) pattern; if False, use a binary (0, 1) pattern.
         dim_names (dict): Dictionary specifying the names of x and y dimensions.
@@ -87,6 +89,7 @@ def make_checkerboard_xr(
         xr.DataArray: Input DataArray with checkerboard pattern applied.
     """
     sq_y, sq_x = square_size
+    sep = separation_size
 
     # Check for invalid inputs
     if sq_y <= 0 or sq_x <= 0:
@@ -99,6 +102,8 @@ def make_checkerboard_xr(
         raise ValueError(
             "For non-validation (binary pattern), keep_pattern must be 0 or 1."
         )
+    if sep and sep < 0:
+        raise ValueError("Separation size must be a non-negative, non-zero integer")
 
     # Determine x and y dimensions
     if dim_names is None:
@@ -133,6 +138,11 @@ def make_checkerboard_xr(
             "Warning: The inputs for board_size or square_size are not the same. This may result in a non-square checkerboard."
         )
 
+    # if separation is given, modify the row and column sizes
+    if sep:
+        sq_x += sep
+        sq_y += sep
+
     # Calculate the checkerboard pattern efficiently
     y_indices = (np.arange(y_size) // sq_y)[:, np.newaxis]
     x_indices = np.arange(x_size) // sq_x
@@ -141,6 +151,13 @@ def make_checkerboard_xr(
         checkerboard = (y_indices + x_indices) % 3
     else:
         checkerboard = (y_indices + x_indices) % 2
+
+    # mask the board with a separation mask if given
+    if sep:
+        for i in range(0, y_size + sep, sq_y):
+            checkerboard[i - sep : i] = -1
+        for j in range(0, x_size + sep, sq_x):
+            checkerboard[:, j - sep : j] = -1
 
     # Create a DataArray with the checkerboard pattern
     checkerboard_da = xr.DataArray(
@@ -161,6 +178,7 @@ def make_checkerboard_xr(
     result.attrs["checkerboard_square_size"] = str(square_size)
     result.attrs["checkerboard_keep_pattern"] = str(keep_pattern)
     result.attrs["checkerboard_validation"] = str(validation)
+    result.attrs["checkerboard_mask_nosample"] = str(-1)
     result.attrs["checkerboard_dims"] = f"y: {y_dim}, x: {x_dim}"
 
     return result
