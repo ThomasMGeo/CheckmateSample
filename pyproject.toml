@@ -36,10 +36,10 @@ pythonpath = "src"
 [project.urls]
 Homepage = "https://github.com/ThomasMGeo/CheckmateSample"
 
-[tool.ruff.lint]
+[tool.ruff]
 # Enable pycodestyle ('E') and Pyflakes ('F') codes by default.
 lint.select = ["E", "F"]
-lint.ignore = []
+lint.ignore = ["E501"]
 
 # Allow autofix for all enabled rules (when `--fix`) is provided.
 lint.fixable = ["A", "B", "C", "D", "E", "F"]
@@ -71,7 +71,7 @@ exclude = [
 ]
 
 # Same as Black.
-line-length = 88
+line-length = 120
 
 # Allow unused variables when underscore-prefixed.
 lint.dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
