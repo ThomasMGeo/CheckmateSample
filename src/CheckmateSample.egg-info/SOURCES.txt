@@ -6,7 +6,6 @@ pyproject.toml
 .github/workflows/ruff.yml
 .github/workflows/test-pypi.yml
 .github/workflows/version_check.yml
-example_notebooks/_version.py
 example_notebooks/example_notebook.ipynb
 src/CheckmateSample/__init__.py
 src/CheckmateSample/_version.py
