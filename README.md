@@ -15,9 +15,9 @@ validation (bool): If True, use a ternary (0, 1, 2) pattern; if False, use a bin
 
 an example of this is:
 
-'''
+```
 checkerboard_01 = make_checkerboard(board_size=(70,70), square_size=(10,10), separation_size=2)
-'''
+```
 
 xarray only:
 
@@ -27,15 +27,14 @@ da (xr.DataArray): Input DataArray to apply the checkerboard pattern to
 an example of this:
 
 
-'''
+```
 ds = xr.tutorial.load_dataset('air_temperature')
 
 air_temp = ds.air.isel(time=0)
 
 square_size = (7, 5)  # 7x5 pixel squares
 checkerboard_temp_0 = make_checkerboard_xr(air_temp, square_size, separation_size=3, keep_pattern=0, validation=False)
-
-'''
+```
 
 ## Dependencies
 
