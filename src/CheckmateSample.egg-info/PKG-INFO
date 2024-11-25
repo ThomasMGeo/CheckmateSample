@@ -31,6 +31,7 @@ separation_size (int): Size of separation distance in pixels between squares.
 validation (bool): If True, use a ternary (0, 1, 2) pattern; if False, use a binary (0, 1) pattern
 
 an example of this is:
+
 '''
 checkerboard_01 = make_checkerboard(board_size=(70,70), square_size=(10,10), separation_size=2)
 '''
@@ -41,6 +42,7 @@ dim_names (dict): Dictionary specifying the names of x and y dimensions
 da (xr.DataArray): Input DataArray to apply the checkerboard pattern to
 
 an example of this:
+
 
 '''
 ds = xr.tutorial.load_dataset('air_temperature')
