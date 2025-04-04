@@ -7,6 +7,7 @@ def make_checkerboard(
     square_size: tuple[int, int],
     separation_size: int = None,
     validation: bool = False,
+    verbose: bool = False,
 ) -> np.ndarray:
     """
     Create a checkerboard pattern.
@@ -33,7 +34,7 @@ def make_checkerboard(
         raise ValueError("Separation size must be a non-negative, non-zero integer")
 
     # Add warning if inputs are not the same
-    if rows != cols or sq_rows != sq_cols:
+    if verbose and (rows != cols or sq_rows != sq_cols):
         print(
             "Warning: The inputs for board_size or square_size are not the same. This may result in a non-square checkerboard."
         )
@@ -71,6 +72,7 @@ def make_checkerboard_xr(
     keep_pattern: int = 1,
     validation: bool = False,
     dim_names: dict = None,
+    verbose: bool = False,
 ) -> xr.DataArray:
     """
     Apply a checkerboard pattern to an existing xarray DataArray.
@@ -95,9 +97,13 @@ def make_checkerboard_xr(
     if sq_y <= 0 or sq_x <= 0:
         raise ValueError("Square size dimensions must be positive integers.")
     if validation and keep_pattern not in [0, 1, 2]:
-        raise ValueError("For validation (ternary pattern), keep_pattern must be 0, 1, or 2.")
+        raise ValueError(
+            "For validation (ternary pattern), keep_pattern must be 0, 1, or 2."
+        )
     elif not validation and keep_pattern not in [0, 1]:
-        raise ValueError("For non-validation (binary pattern), keep_pattern must be 0 or 1.")
+        raise ValueError(
+            "For non-validation (binary pattern), keep_pattern must be 0 or 1."
+        )
     if sep and sep < 0:
         raise ValueError("Separation size must be a non-negative, non-zero integer")
 
@@ -111,7 +117,9 @@ def make_checkerboard_xr(
         x_dim = next((dim for dim in da.dims if dim in possible_x_dims), None)
 
         if y_dim is None or x_dim is None:
-            raise ValueError("Could not automatically detect x and y dimensions. Please specify using dim_names.")
+            raise ValueError(
+                "Could not automatically detect x and y dimensions. Please specify using dim_names."
+            )
     else:
         y_dim = dim_names.get("y")
         x_dim = dim_names.get("x")
@@ -120,12 +128,14 @@ def make_checkerboard_xr(
             raise ValueError("Both 'x' and 'y' must be specified in dim_names.")
 
         if y_dim not in da.dims or x_dim not in da.dims:
-            raise ValueError(f"Specified dimensions {y_dim} and {x_dim} not found in DataArray.")
+            raise ValueError(
+                f"Specified dimensions {y_dim} and {x_dim} not found in DataArray."
+            )
 
     y_size, x_size = da.sizes[y_dim], da.sizes[x_dim]
 
     # Add warning if inputs are not the same
-    if y_size != x_size or sq_y != sq_x:
+    if verbose and (y_size != x_size or sq_y != sq_x):
         print(
             "Warning: The inputs for board_size or square_size are not the same. This may result in a non-square checkerboard."
         )
