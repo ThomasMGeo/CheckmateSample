@@ -7,22 +7,16 @@ def test_checkerboard_values_zero_one():
     board_size = (10, 10)
     square_size = (2, 2)
     checkerboard = make_checkerboard(board_size, square_size, verbose=True)
-    assert np.all(
-        np.logical_or(checkerboard == 0, checkerboard == 1)
-    ), "Checkerboard should only contain 0 and 1"
+    assert np.all(np.logical_or(checkerboard == 0, checkerboard == 1)), "Checkerboard should only contain 0 and 1"
 
 
 def test_masked_checkerboard_values_minusone_zero_one():
     board_size = (10, 10)
     square_size = (2, 2)
     separation_size = 1
-    checkerboard = make_checkerboard(
-        board_size, square_size, separation_size, verbose=True
-    )
+    checkerboard = make_checkerboard(board_size, square_size, separation_size, verbose=True)
     # Use logical_or.reduce for multiple conditions
-    valid_values = np.logical_or.reduce(
-        [checkerboard == -1, checkerboard == 0, checkerboard == 1]
-    )
+    valid_values = np.logical_or.reduce([checkerboard == -1, checkerboard == 0, checkerboard == 1])
     assert np.all(valid_values), "Checkerboard should only contain -1, 0 and 1"
 
 
@@ -37,9 +31,7 @@ def test_checkerboard_values():
     board_size = (4, 4)
     square_size = (1, 1)
     checkerboard = make_checkerboard(board_size, square_size, verbose=True)
-    expected = np.array(
-        [[0, 1, 0, 1], [1, 0, 1, 0], [0, 1, 0, 1], [1, 0, 1, 0]], dtype="float32"
-    )
+    expected = np.array([[0, 1, 0, 1], [1, 0, 1, 0], [0, 1, 0, 1], [1, 0, 1, 0]], dtype="float32")
     np.testing.assert_array_equal(checkerboard, expected)
 
 
@@ -47,9 +39,7 @@ def test_masked_checkerboard_values():
     board_size = (4, 4)
     square_size = (1, 1)
     setparation_size = 1
-    checkerboard = make_checkerboard(
-        board_size, square_size, setparation_size, verbose=True
-    )
+    checkerboard = make_checkerboard(board_size, square_size, setparation_size, verbose=True)
     expected = np.array(
         [[0, -1, 1, -1], [-1, -1, -1, -1], [1, -1, 0, -1], [-1, -1, -1, -1]],
         dtype="float32",
@@ -79,9 +69,7 @@ def test_masked_checkerboard_larger_squares():
     board_size = (6, 6)
     square_size = (2, 2)
     separation_size = 1
-    checkerboard = make_checkerboard(
-        board_size, square_size, separation_size, verbose=True
-    )
+    checkerboard = make_checkerboard(board_size, square_size, separation_size, verbose=True)
     # Update expected to match the actual implementation pattern
     expected = np.array(
         [
@@ -119,9 +107,7 @@ def test_masked_checkerboard_rectangular():
     board_size = (6, 4)
     square_size = (2, 1)
     setparation_size = 1
-    checkerboard = make_checkerboard(
-        board_size, square_size, setparation_size, verbose=True
-    )
+    checkerboard = make_checkerboard(board_size, square_size, setparation_size, verbose=True)
     expected = np.array(
         [
             [0, -1, 1, -1],
@@ -182,25 +168,16 @@ def test_make_checkerboard_validation_true():
 def test_make_checkerboard_warning_non_square_board(capsys):
     make_checkerboard((5, 6), (2, 2), verbose=True)
     captured = capsys.readouterr()
-    assert (
-        "Warning: The inputs for board_size or square_size are not the same"
-        in captured.out
-    )
+    assert "Warning: The inputs for board_size or square_size are not the same" in captured.out
 
 
 def test_make_checkerboard_warning_non_square_squares(capsys):
     make_checkerboard((6, 6), (2, 3), verbose=True)
     captured = capsys.readouterr()
-    assert (
-        "Warning: The inputs for board_size or square_size are not the same"
-        in captured.out
-    )
+    assert "Warning: The inputs for board_size or square_size are not the same" in captured.out
 
 
 def test_make_checkerboard_warning_both_non_square(capsys):
     make_checkerboard((5, 6), (2, 3), verbose=True)
     captured = capsys.readouterr()
-    assert (
-        "Warning: The inputs for board_size or square_size are not the same"
-        in captured.out
-    )
+    assert "Warning: The inputs for board_size or square_size are not the same" in captured.out

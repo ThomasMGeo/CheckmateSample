@@ -15,4 +15,8 @@ src/CheckmateSample.egg-info/SOURCES.txt
 src/CheckmateSample.egg-info/dependency_links.txt
 src/CheckmateSample.egg-info/requires.txt
 src/CheckmateSample.egg-info/top_level.txt
+src/CheckmateSample/__pycache__/__init__.cpython-312.pyc
+src/CheckmateSample/__pycache__/_version.cpython-312.pyc
+src/CheckmateSample/__pycache__/generator.cpython-312.pyc
 tests/test_make_checkerboard.py
+tests/__pycache__/test_make_checkerboard.cpython-312-pytest-7.4.4.pyc
