@@ -1,6 +1,6 @@
-Metadata-Version: 2.1
+Metadata-Version: 2.4
 Name: CheckmateSample
-Version: 0.0.post1
+Version: 0.0.post154
 Summary: A sample project with checkerboard functionality
 Author-email: Thomas Martin <tmartin@ucar.edu>
 Project-URL: Homepage, https://github.com/ThomasMGeo/CheckmateSample
@@ -13,6 +13,7 @@ Provides-Extra: dev
 Requires-Dist: pytest>=7.4.0; extra == "dev"
 Requires-Dist: ruff>=0.1.3; extra == "dev"
 Requires-Dist: setuptools_scm>=8.1; extra == "dev"
+Dynamic: license-file
 
 # CheckmateSample
 
