@@ -13,6 +13,8 @@ separation_size (int): Size of separation distance in pixels between squares.
 
 validation (bool): If True, use a ternary (0, 1, 2) pattern; if False, use a binary (0, 1) pattern
 
+verbose flag: True / False 
+
 an example of this is:
 
 ```
