@@ -79,7 +79,7 @@ jobs:
         ls -l dist/
     - name: Publish distribution to PyPI
       env:
-        TWINE_USERNAME: **token**
+        TWINE_USERNAME: '__token__'
         TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
       run: |
         echo "Checking distribution files..."
