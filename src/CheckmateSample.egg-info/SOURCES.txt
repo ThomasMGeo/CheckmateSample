@@ -5,6 +5,7 @@ pyproject.toml
 .github/workflows/build-create-dist.yml
 .github/workflows/ruff.yml
 .github/workflows/test-pypi.yml
+.github/workflows/test.yml
 .github/workflows/version_check.yml
 example_notebooks/example_notebook.ipynb
 src/CheckmateSample/__init__.py
@@ -19,4 +20,3 @@ src/CheckmateSample/__pycache__/__init__.cpython-312.pyc
 src/CheckmateSample/__pycache__/_version.cpython-312.pyc
 src/CheckmateSample/__pycache__/generator.cpython-312.pyc
 tests/test_make_checkerboard.py
-tests/__pycache__/test_make_checkerboard.cpython-312-pytest-7.4.4.pyc

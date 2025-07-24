@@ -1,6 +1,6 @@
 Metadata-Version: 2.4
 Name: CheckmateSample
-Version: 0.4.1.post0
+Version: 0.0.post1
 Summary: A sample project with checkerboard functionality
 Author-email: Thomas Martin <tmartin@ucar.edu>
 Project-URL: Homepage, https://github.com/ThomasMGeo/CheckmateSample
@@ -59,7 +59,7 @@ checkerboard_temp_0 = make_checkerboard_xr(air_temp, square_size, separation_siz
 
 numpy and xarray
 
-## Useage
+## Usage
 
 # Create a NumPy checkerboard
 checkerboard = make_checkerboard((10, 10), (2, 2))
