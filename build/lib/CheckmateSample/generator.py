@@ -11,17 +11,49 @@ def make_checkerboard(
 ) -> np.ndarray:
     """
     Create a checkerboard pattern.
+
+    This function generates a checkerboard pattern that can be used for spatial
+    cross-validation in machine learning to combat spatial autocorrelation.
     Props to stackoverflow user Blubberguy22, posted March 17, 2020 at 19:00
     https://stackoverflow.com/questions/2169478/how-to-make-a-checkerboard-in-numpy
 
     Parameters:
-        board_size (tuple[int, int]): Size of the board in rows and columns.
-        square_size (tuple[int, int]): Size of each square in rows and columns.
-        separation_size (int): Size of the separation mask between squares.
-        validation (bool): If True, use 0, 1, 2 pattern; if False, use 0, 1 pattern.
+        board_size (tuple[int, int]): Size of the board in (rows, columns).
+            Must be positive integers.
+        square_size (tuple[int, int]): Size of each square in (rows, columns).
+            Must be positive integers.
+        separation_size (int, optional): Size of the separation mask between squares
+            in pixels. If provided, creates a buffer zone with value -1 between
+            checkerboard squares. Must be a non-negative integer. Default is None.
+        validation (bool, optional): If True, creates a ternary pattern with values
+            (0, 1, 2) for train/test/validation splits. If False, creates a binary
+            pattern with values (0, 1) for train/test splits. Default is False.
+        verbose (bool, optional): If True, prints warnings for non-square inputs.
+            Default is False.
 
     Returns:
-        np.ndarray: Checkerboard pattern as a NumPy array.
+        np.ndarray: Checkerboard pattern as a 2D NumPy array with dtype float32.
+            Values are 0 and 1 for binary pattern, 0, 1, and 2 for ternary pattern,
+            and -1 for separation areas when separation_size is specified.
+
+    Raises:
+        ValueError: If any dimension is non-positive or separation_size is negative.
+
+    Examples:
+        >>> # Basic binary checkerboard
+        >>> board = make_checkerboard((8, 8), (2, 2))
+        >>> board.shape
+        (8, 8)
+
+        >>> # Ternary pattern for train/test/validation
+        >>> board = make_checkerboard((10, 10), (2, 2), validation=True)
+        >>> np.unique(board)
+        array([0., 1., 2.])
+
+        >>> # With separation between squares
+        >>> board = make_checkerboard((10, 10), (3, 3), separation_size=1)
+        >>> -1 in board  # Check for separation areas
+        True
     """
     rows, cols = board_size
     sq_rows, sq_cols = square_size
@@ -77,18 +109,65 @@ def make_checkerboard_xr(
     """
     Apply a checkerboard pattern to an existing xarray DataArray.
 
+    This function applies a checkerboard mask to an xarray DataArray, keeping only
+    the specified pattern areas and setting others to NaN. Useful for spatial
+    cross-validation in geospatial machine learning applications.
+
     Parameters:
         da (xr.DataArray): Input DataArray to apply the checkerboard pattern to.
+            Must have at least 2 spatial dimensions.
         square_size (tuple[int, int]): Size of each square in pixels (y, x).
-        separation_size (int): Size of separation between squares in pixels.
-        keep_pattern (int): Which part of the pattern to keep. 0, 1 for binary pattern; 0, 1, 2 for ternary pattern.
-        validation (bool): If True, use a ternary (0, 1, 2) pattern; if False, use a binary (0, 1) pattern.
-        dim_names (dict): Dictionary specifying the names of x and y dimensions.
-                          Format: {'x': 'x_dim_name', 'y': 'y_dim_name'}
-                          If None, will attempt to automatically detect dimensions.
+            Must be positive integers. Determines the size of checkerboard squares.
+        separation_size (int, optional): Size of separation between squares in pixels.
+            If provided, creates buffer zones between squares. Must be non-negative.
+            Default is None.
+        keep_pattern (int, optional): Which part of the pattern to keep.
+            For binary patterns: 0 or 1. For ternary patterns: 0, 1, or 2.
+            Areas not matching this pattern will be set to NaN. Default is 1.
+        validation (bool, optional): If True, creates a ternary (0, 1, 2) pattern
+            for train/test/validation splits. If False, creates a binary (0, 1)
+            pattern for train/test splits. Default is False.
+        dim_names (dict, optional): Dictionary specifying the names of x and y dimensions.
+            Format: {'x': 'x_dim_name', 'y': 'y_dim_name'}
+            If None, automatically detects common dimension names like 'x', 'y',
+            'lat', 'lon', 'latitude', 'longitude'. Default is None.
+        verbose (bool, optional): If True, prints warnings for non-square inputs.
+            Default is False.
 
     Returns:
         xr.DataArray: Input DataArray with checkerboard pattern applied.
+            Areas not matching keep_pattern are set to NaN. Original attributes
+            are preserved with additional checkerboard metadata added.
+
+    Raises:
+        ValueError: If square_size dimensions are non-positive, keep_pattern is
+            invalid for the chosen validation mode, separation_size is negative,
+            or required dimensions cannot be found in the DataArray.
+
+    Examples:
+        >>> import xarray as xr
+        >>> import numpy as np
+        >>>
+        >>> # Create sample DataArray
+        >>> da = xr.DataArray(np.random.rand(20, 30),
+        ...                   dims=['lat', 'lon'],
+        ...                   coords={'lat': range(20), 'lon': range(30)})
+        >>>
+        >>> # Apply binary checkerboard, keep pattern 0 (training data)
+        >>> train_data = make_checkerboard_xr(da, (5, 5), keep_pattern=0)
+        >>>
+        >>> # Apply binary checkerboard, keep pattern 1 (test data)
+        >>> test_data = make_checkerboard_xr(da, (5, 5), keep_pattern=1)
+        >>>
+        >>> # Ternary pattern with validation set
+        >>> val_data = make_checkerboard_xr(da, (4, 4), keep_pattern=2,
+        ...                                validation=True)
+        >>>
+        >>> # Custom dimension names
+        >>> custom_da = xr.DataArray(np.random.rand(15, 25),
+        ...                          dims=['custom_y', 'custom_x'])
+        >>> result = make_checkerboard_xr(custom_da, (3, 3),
+        ...                               dim_names={'y': 'custom_y', 'x': 'custom_x'})
     """
     sq_y, sq_x = square_size
     sep = separation_size
