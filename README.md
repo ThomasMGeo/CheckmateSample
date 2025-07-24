@@ -42,7 +42,7 @@ checkerboard_temp_0 = make_checkerboard_xr(air_temp, square_size, separation_siz
 
 numpy and xarray
 
-## Useage
+## Usage
 
 # Create a NumPy checkerboard
 checkerboard = make_checkerboard((10, 10), (2, 2))
