@@ -3,7 +3,7 @@ name = "CheckmateSample"
 
 description = "A sample project with checkerboard functionality"
 authors = [
-    {name = "Thomas Martin", email = "tmartin@ucar.edu"},
+    {name = "Thomas Martin"},
 ]
 dependencies = [
     "numpy>=1.26.0",
